@@ -1,40 +1,44 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn } from 'typeorm';
-import { ImageEntity } from '../image/image.entity';
+import { BeforeInsert, Column, Entity, PrimaryColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { ArticleEntity } from '../article/article.entity';
-import { ReleaseEntity } from "../release/release.entity";
+import * as bcrypt from 'bcrypt';
+import { UserRO } from './user.ro';
 
 @Entity('tag')
-export class TagEntity {
-    constructor(init?: Partial<TagEntity>) {
+export class UserEntity {
+    constructor(init?: Partial<UserEntity>) {
         if (init) {
             Object.assign(this, init);
         }
     }
 
     @ApiProperty()
-    @PrimaryColumn('varchar', { length: 30 })
+    @PrimaryColumn('varchar')
     id: string;
 
     @ApiProperty()
     @Column('varchar', { nullable: true })
-    title: string;
+    name: string;
 
     @ApiProperty()
     @Column('text', { nullable: true })
-    description: string;
+    password: string;
 
-    @ApiProperty({ type: () => ImageEntity })
-    @OneToOne(type => ImageEntity, {onDelete: 'CASCADE'})
-    @JoinColumn()
-    image: ImageEntity;
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
 
-    @ApiProperty({ type: () => ArticleEntity, isArray: true })
-    @ManyToMany(
-        type => ArticleEntity,
-        article => article.tags,
-        { nullable: true }
-    )
-    @JoinTable()
-    articles: ArticleEntity[];
+    async comparePassword(attempt: string): Promise<boolean> {
+        return await bcrypt.compare(attempt, this.password);
+    }
+
+    toResponseObject(showToken: boolean = true): UserRO {
+        const { id, name } = this;
+        const responseObject: UserRO = {
+            id,
+            name
+        };
+
+        return responseObject;
+    }
 }

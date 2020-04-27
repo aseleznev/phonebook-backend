@@ -6,9 +6,10 @@ export default {
     password: process.env.TYPEORM_PASSWORD,
     database: process.env.TYPEORM_DATABASE,
     port: parseInt(process.env.TYPEORM_PORT),
+    jwtSecret: process.env.JWT_SECRET,
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     logging: true,
     migrationsRun: false,
     synchronize: true,
-    dropSchema: false
+    dropSchema: true
 };
