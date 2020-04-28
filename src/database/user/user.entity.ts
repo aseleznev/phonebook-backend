@@ -1,7 +1,6 @@
-import { BeforeInsert, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
-import { UserRO } from './user.ro';
 
 @Entity('tag')
 export class UserEntity {
@@ -12,12 +11,12 @@ export class UserEntity {
     }
 
     @ApiProperty()
-    @PrimaryColumn('varchar')
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @ApiProperty()
     @Column('varchar', { nullable: true })
-    name: string;
+    username: string;
 
     @ApiProperty()
     @Column('text', { nullable: true })
@@ -26,19 +25,5 @@ export class UserEntity {
     @BeforeInsert()
     async hashPassword() {
         this.password = await bcrypt.hash(this.password, 10);
-    }
-
-    async comparePassword(attempt: string): Promise<boolean> {
-        return await bcrypt.compare(attempt, this.password);
-    }
-
-    toResponseObject(showToken: boolean = true): UserRO {
-        const { id, name } = this;
-        const responseObject: UserRO = {
-            id,
-            name
-        };
-
-        return responseObject;
     }
 }
