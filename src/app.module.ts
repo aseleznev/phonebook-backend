@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from 'nestjs-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './database/user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { WorkerModule } from './database/worker/worker.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -20,7 +21,8 @@ const ENV = process.env.NODE_ENV;
             inject: [ConfigService]
         }),
         UserModule,
-        AuthModule
+        AuthModule,
+        WorkerModule
     ],
     controllers: [AppController],
     providers: [AppService]
