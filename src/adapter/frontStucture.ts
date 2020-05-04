@@ -1,9 +1,8 @@
-import { ADCompany } from './adCompany';
-import { Company, Department, People } from './Company';
-import { ADPhoneBook } from './adStructure';
-import { Utils } from './utils';
-import { ADPerson } from './adPerson';
-import { WorkerEntity } from '../database/worker/worker.entity';
+import {ADCompany} from "./adCompany";
+import {Company, Department, People} from "./Company";
+import {ADPhoneBook} from "./adStructure";
+import {Utils} from "./utils";
+import {ADPerson} from "./adPerson";
 
 export class FrontStucture {
     private companies: Array<Company>;
@@ -14,17 +13,13 @@ export class FrontStucture {
         this.phoneBook = new ADPhoneBook();
     }
 
-    public addPeople(people: WorkerEntity[]) {
+    public addPeople(people: Array<any>) {
         people.forEach(user => {
             if (
-                (user.telephoneNumber ||
-                    user.ipPhone ||
-                    user.mobile ||
-                    user.facsimileTelephoneNumber ||
-                    user.cn === 'Черепанов Всеволод Владимирович') &&
-                user.company !== 'ООО "Газпром геологоразведка"' &&
-                user.company !== 'НПФ "Инжиниринговый центр" (г. Раменское)'
-                // && user.company !== "Филиал \"Газпром недра НТЦ\" (г. Тюмень)"
+                (user.telephoneNumber || user.ipPhone || user.mobile || user.facsimileTelephoneNumber || user.cn === "Черепанов Всеволод Владимирович")
+                && user.company !== "ООО \"Газпром геологоразведка\""
+                && user.company !== "НПФ \"Инжиниринговый центр\" (г. Раменское)"
+            // && user.company !== "Филиал \"Газпром недра НТЦ\" (г. Тюмень)"
             ) {
                 this.phoneBook.addPerson(user);
             }
@@ -34,10 +29,10 @@ export class FrontStucture {
             let _company: Company = new Company();
             _company.name = company.name;
             _company.address = company.address;
-            _company.mail = company.mail;
-            _company.phones.push({ type: 'Городской', number: Utils.formatPhoneCity(company.phone) });
-            _company.phones.push({ type: 'Газовый', number: Utils.formatPhoneGaz(company.gazPhone) });
-            _company.phones.push({ type: 'Факс', number: Utils.formatPhoneCity(company.fax) });
+            _company.email = company.mail;
+            _company.phones.push({type: "Городской", number: Utils.formatPhoneCity(company.phone)});
+            _company.phones.push({type: "Газовый", number: Utils.formatPhoneGaz(company.gazPhone)});
+            _company.phones.push({type: "Факс", number: Utils.formatPhoneCity(company.fax)});
 
             if (company.structure.length > 0) {
                 company.structure.forEach(child => {
@@ -73,12 +68,14 @@ export class FrontStucture {
                             department1.subDepartments.push(department2);
                         });
                     }
-                    _company.departments.push(department1);
-                });
+                    _company.subDepartments.push(department1);
+                })
             }
 
             this.companies.push(_company);
         });
+
+
     }
 
     public getCompanies(): Company[] {
@@ -100,9 +97,9 @@ export class FrontStucture {
         result.location = person.l;
         result.position = person.title;
         result.weight = person.weight;
-        result.phones.push({ type: 'Городской', number: Utils.formatPhoneCity(person.ipPhone) });
-        result.phones.push({ type: 'Газовый', number: Utils.formatPhoneGaz(person.telephoneNumber) });
-        result.phones.push({ type: 'Факс', number: Utils.formatPhoneCity(person.facsimileTelephoneNumber) });
+        result.phones.push({type: "Городской", number: Utils.formatPhoneCity(person.ipPhone)});
+        result.phones.push({type: "Газовый", number: Utils.formatPhoneGaz(person.telephoneNumber)});
+        result.phones.push({type: "Факс", number: Utils.formatPhoneCity(person.facsimileTelephoneNumber)});
         return result;
     }
 }

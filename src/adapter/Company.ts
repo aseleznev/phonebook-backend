@@ -1,13 +1,15 @@
 export class Company {
     name: string;
     phones: Array<any>;
-    mail: string;
+    email: string;
     address: string;
-    departments: Array<Department>;
+    subDepartments: Array<Department>;
+    people: Array<People>;
 
     constructor() {
         this.phones = new Array<any>();
-        this.departments = new Array<Department>();
+        this.subDepartments = new Array<Department>();
+        this.people = new Array<any>();
     }
 }
 

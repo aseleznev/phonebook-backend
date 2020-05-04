@@ -1,5 +1,4 @@
-import { ADCompany } from './adCompany';
-import { WorkerEntity } from '../database/worker/worker.entity';
+import {ADCompany} from "./adCompany";
 
 export class ADPhoneBook {
     companies: ADCompany[];
@@ -8,7 +7,7 @@ export class ADPhoneBook {
         this.companies = [];
     }
 
-    public addPerson(person: WorkerEntity) {
+    public addPerson(person) {
         if (person.company !== undefined) {
             const c = this.addCompany(person.company);
             if (c) c.addPerson(person);
@@ -18,29 +17,17 @@ export class ADPhoneBook {
     private addCompany(company: string): ADCompany {
         if (!this.getCompanyByName(company) && company !== undefined) {
             switch (company) {
-                case 'ООО "Торговля и сервис"':
-                    this.companies.push(
-                        new ADCompany(
-                            company,
-                            '(444)9394933',
-                            '70055555',
-                            '(444)9394933',
-                            'trade@phones.ru',
-                            '000000, мой адрес не дом и не улица'
-                        )
-                    );
+                case "ООО \"Газпром недра\"":
+                    this.companies.push(new ADCompany(company, "(495)7195775",
+                        "70095775", "(495)7195765",
+                        "office@nedra.gazprom.ru",
+                        "117418, г. Москва, ул. Новочеремушкинская, д. 65"));
                     break;
-                case 'Филиал "Торговля и сервис':
-                    this.companies.push(
-                        new ADCompany(
-                            company,
-                            '(444)9394933',
-                            '70055555',
-                            '(444)9394933',
-                            'trade@phones.ru',
-                            '000000, мой адрес не дом и не улица'
-                        )
-                    );
+                case "Филиал \"Газпром недра НТЦ\" (г. Тюмень)":
+                    this.companies.push(new ADCompany(company, "(3452)381980",
+                        "72137500", "(3452)381981",
+                        "ntc@nedra.gazprom.ru",
+                        "625000, г. Тюмень, ул. Герцена, д. 70"));
                     break;
                 default:
                     this.companies.push(new ADCompany(company));
