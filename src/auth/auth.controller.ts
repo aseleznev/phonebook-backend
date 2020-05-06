@@ -5,6 +5,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { UserDto } from '../database/user/dto/user.dto';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@UseGuards(LocalAuthGuard)
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
@@ -19,7 +20,6 @@ export class AuthController {
         return res.status(HttpStatus.OK).send(result);
     }
 
-    @UseGuards(LocalAuthGuard)
     @Post('login')
     @ApiBody({ type: UserDto })
     @ApiOkResponse({ description: 'result Token' })

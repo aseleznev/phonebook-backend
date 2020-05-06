@@ -2,7 +2,7 @@ import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 
-@Entity('tag')
+@Entity('user')
 export class UserEntity {
     constructor(init?: Partial<UserEntity>) {
         if (init) {

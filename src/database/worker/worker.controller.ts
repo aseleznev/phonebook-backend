@@ -1,11 +1,14 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { WorkerEntity } from './worker.entity';
 import { WorkerService } from './worker.service';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { FrontStucture } from '../../adapter/frontStucture';
 import { Company } from '../../adapter/Company';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 ApiTags('worker');
+// @ApiBearerAuth('JWT')
+// @UseGuards(JwtAuthGuard)
 @Controller('worker')
 export class WorkerController {
     constructor(private readonly workerService: WorkerService) {}

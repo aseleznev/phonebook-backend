@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('worker')
@@ -10,6 +10,10 @@ export class WorkerEntity {
     }
 
     @ApiProperty()
+    @PrimaryGeneratedColumn()
+    id: string;
+
+    @ApiProperty()
     @Column('varchar', { nullable: false })
     cn: string;
 
@@ -18,7 +22,7 @@ export class WorkerEntity {
     title: string;
 
     @ApiProperty()
-    @PrimaryColumn('varchar')
+    @Column('varchar', { nullable: true })
     mail: string;
 
     @ApiProperty()
