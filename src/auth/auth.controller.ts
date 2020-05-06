@@ -5,7 +5,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { UserDto } from '../database/user/dto/user.dto';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-@UseGuards(LocalAuthGuard)
+//@UseGuards(LocalAuthGuard)
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
