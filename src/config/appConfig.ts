@@ -11,5 +11,5 @@ export default {
     logging: true,
     migrationsRun: false,
     synchronize: true,
-    dropSchema: false
+    dropSchema: true
 };
