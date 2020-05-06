@@ -68,7 +68,7 @@ export class ADCompany {
         //
 
         // Хардкод для учеток, у которых нет ни отдела, ни управления
-        if (!person.departmentNumber && !person.division && !person.description) return 0;
+        if (!person.departmentNumber && !person.division/* && !person.description*/) return 0;
         //
 
         let dep = null;
