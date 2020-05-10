@@ -20,23 +20,6 @@ export class UserService {
         return await this.userRepository.findOne({ username });
     }
 
-    public async create(user: UserEntity): Promise<UserEntity> {
-        return await this.userRepository.save(user);
-    }
-
-    public async update(id: string, newValue: UserEntity): Promise<UserEntity> {
-        const user = await this.userRepository.findOneOrFail(id);
-        if (!user.id) {
-            console.error("User doesn't exist");
-        }
-        await this.userRepository.update(id, newValue);
-        return await this.userRepository.findOne(id);
-    }
-
-    public async delete(id: string): Promise<DeleteResult> {
-        return await this.userRepository.delete(id);
-    }
-
     public async register(newUser: UserDto): Promise<UserEntity> {
         const { username } = newUser;
         let user = await this.userRepository.findOne({ where: { username } });

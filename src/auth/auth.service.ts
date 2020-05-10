@@ -10,7 +10,7 @@ export class AuthService {
     async register(user: UserDto) {
         let status = {
             success: true,
-            message: 'user register'
+            message: 'user registered'
         };
         try {
             await this.usersService.register(user);

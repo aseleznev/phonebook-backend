@@ -3,7 +3,8 @@ import { AuthService } from './auth.service';
 import { UserService } from 'src/database/user/user.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { UserDto } from '../database/user/dto/user.dto';
-import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -19,6 +20,7 @@ export class AuthController {
         return res.status(HttpStatus.OK).send(result);
     }
 
+    @ApiBearerAuth('local')
     @UseGuards(LocalAuthGuard)
     @Post('login')
     @ApiBody({ type: UserDto })

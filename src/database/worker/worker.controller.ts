@@ -7,17 +7,19 @@ import { Company } from '../../adapter/Company';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 ApiTags('worker');
-// @ApiBearerAuth('JWT')
-// @UseGuards(JwtAuthGuard)
 @Controller('worker')
 export class WorkerController {
     constructor(private readonly workerService: WorkerService) {}
 
+    @ApiBearerAuth('JWT')
+    @UseGuards(JwtAuthGuard)
     @Get()
     async findAll(): Promise<WorkerEntity[]> {
         return this.workerService.findAll();
     }
 
+    @ApiBearerAuth('JWT')
+    @UseGuards(JwtAuthGuard)
     @Get('structure')
     async getStructuredData(): Promise<Company[]> {
         const workers = await this.workerService.findAll();

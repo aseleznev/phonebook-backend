@@ -21,6 +21,7 @@ async function bootstrap() {
         .setTitle('Phone book')
         .setDescription('Gazprom nedra corporate phone book')
         .setVersion('1.0')
+        .addBasicAuth({ type: 'http', scheme: 'basic' }, 'local')
         .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
         .addTag('users')
         .build();
